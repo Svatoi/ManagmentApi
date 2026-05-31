@@ -3,3 +3,4 @@ uvicorn==0.48.0
 SQLAlchemy==2.0.50
 asyncpg==0.31.0
 pydantic==2.13.4
+alembic==1.18.4
