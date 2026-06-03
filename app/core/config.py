@@ -15,3 +15,5 @@ class Settings(BaseSettings):
         env_file=os.path.join(BASE_DIR, ".env"),
         env_file_encoding="utf-8"
     )
+
+settings = Settings()

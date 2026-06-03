@@ -1,0 +1,1 @@
+from .db_initial import Base
