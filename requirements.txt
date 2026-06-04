@@ -5,3 +5,4 @@ asyncpg==0.31.0
 pydantic==2.13.4
 alembic==1.18.4
 psycopg2==2.9.12
+email_validator==2.3.0
