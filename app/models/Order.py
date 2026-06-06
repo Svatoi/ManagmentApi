@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -7,8 +7,10 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True)
-    order_name = Column(String, nullable=False)
     count = Column(Integer, nullable=False)
 
-    deliver = relationship("User", back_populates="orders")
-    items = relationship("Item", back_populates="order_item")
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    item_id = Column(Integer, ForeignKey("items.id", ondelete="CASCADE"), nullable=False)
+
+    user = relationship("User", back_populates="orders")
+    item = relationship("Item", back_populates="orders")

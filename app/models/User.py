@@ -9,6 +9,6 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    is_admin = Column(Boolean)
+    is_admin = Column(Boolean, default=False, nullable=False)
 
-    orders = relationship('Order', back_populates='deliver')
+    orders = relationship('Order', back_populates='user')
