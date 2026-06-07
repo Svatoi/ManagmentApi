@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.database.db_initial import get_db
-from app.models.Order import Order
-from app.models.Item import Item
+from app.api.deps import get_current_user
+from app.models import User, Item, Order
 from app.schemas.Order import OrderCreate, OrderOut
 
 router = APIRouter(
@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=OrderOut, status_code=status.HTTP_201_CREATED)
-def create_order(order_in: OrderCreate, db: Session = Depends(get_db)):
+def create_order(order_in: OrderCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     item = db.query(Item).filter(Item.id == order_in.item_id).first()
     if not item:
         raise HTTPException(
@@ -32,7 +32,7 @@ def create_order(order_in: OrderCreate, db: Session = Depends(get_db)):
     db_order = Order(
         count=order_in.quantity,
         item_id=order_in.item_id,
-        user_id=1
+        user_id=current_user.id
     )
 
     db.add(db_order)

@@ -9,7 +9,7 @@ class OrderOut(BaseModel):
     id: int
     item_id: int
     user_id: int
-    quantity: int
+    count: int
     created_at: datetime
 
     class Config:
