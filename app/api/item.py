@@ -1,10 +1,12 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import List
 
-from app.database.db_initial import get_db
-from app.models.Item import Item
-from app.schemas.Item import ItemCreate, ItemOut
+from app.database import get_db
+from app.schemas import ItemCreate, ItemOut
+from app.models import Item, User
+
+from .deps import get_current_admin
 
 router = APIRouter(
     prefix="/items",
@@ -12,7 +14,7 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=ItemOut, status_code=status.HTTP_201_CREATED)
-def create_item(item_in: ItemCreate, db: Session = Depends(get_db)):
+def create_item(item_in: ItemCreate, db: Session = Depends(get_db), current_admin: User = Depends(get_current_admin)):
     db_item = Item(
         item_name=item_in.item_name,
         description=item_in.description,

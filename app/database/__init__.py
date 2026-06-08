@@ -1,1 +1,1 @@
-from .db_initial import Base
+from .db_initial import Base, get_db
