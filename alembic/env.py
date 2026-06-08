@@ -1,6 +1,6 @@
-from app.database import Base
-from app.core.config import settings
 import app.models
+from app.database import Base
+from app.core import settings
 
 from logging.config import fileConfig
 
