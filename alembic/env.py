@@ -4,8 +4,7 @@ from app.core import settings
 
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool, create_engine
 
 from alembic import context
 
@@ -17,9 +16,9 @@ if config.config_file_name is not None:
 target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
-    url = settings.DATABASE_URL
+    connectable = create_engine(settings.DATABASE_URL)
     context.configure(
-        url=url,
+        url=connectable,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
